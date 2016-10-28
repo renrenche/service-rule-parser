@@ -1,5 +1,6 @@
-# service-rule-parser [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> 
+# service-rule-parser
+
+> 服务费规则解析器，PM 可以用类似于 SQL 的语句编写服务费规则，负责解析成 JSON 格式的规则声明。目前支持的规则运算符只有 AND
 
 ## Installation
 
@@ -10,20 +11,12 @@ $ npm install --save service-rule-parser
 ## Usage
 
 ```js
-var serviceRuleParser = require('service-rule-parser');
+const parser = require('service-rule-parser');
+const result = parser.parse('SET maxFee=8000 WHERE carPrice=10');
+// result: { operation: { maxFee: 8000 }, conditions: { carPrice: { eq: 10 } } };
 
-serviceRuleParser('Rainbow');
 ```
 ## License
 
 MIT © [wangshijun]()
 
-
-[npm-image]: https://badge.fury.io/js/service-rule-parser.svg
-[npm-url]: https://npmjs.org/package/service-rule-parser
-[travis-image]: https://travis-ci.org/renrenche/service-rule-parser.svg?branch=master
-[travis-url]: https://travis-ci.org/renrenche/service-rule-parser
-[daviddm-image]: https://david-dm.org/renrenche/service-rule-parser.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/renrenche/service-rule-parser
-[coveralls-image]: https://coveralls.io/repos/renrenche/service-rule-parser/badge.svg
-[coveralls-url]: https://coveralls.io/r/renrenche/service-rule-parser
