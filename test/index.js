@@ -36,6 +36,20 @@ describe('service-rule-parser', function () {
         expect(result.condition.test.neq).to.equal(2.5);
     });
 
+    it('should return expected result when zh_CN comma', function () {
+        const result = parser.parse('SET a=b，b="c",c=\'d\' WHERE test>1 and test<2 and test<>2.5');
+        console.log(result);
+        expect(result.operation).to.be.a('object');
+        expect(result.operation.a).to.equal('b');
+        expect(result.operation.b).to.equal('c');
+        expect(result.operation.c).to.equal('d');
+        expect(result.condition).to.be.a('object');
+        expect(result.condition.test).to.be.a('object');
+        expect(result.condition.test.gt).to.equal(1);
+        expect(result.condition.test.lt).to.equal(2);
+        expect(result.condition.test.neq).to.equal(2.5);
+    });
+
     it('should return expected result when valid param', function () {
         const result = parser.parse('SET minFee =2000, maxFee= 8000,    feeRatio = 0.03 WHERE   carPrice<   10 AND carPrice >5 AND emission <= 4');
         console.log(result);
