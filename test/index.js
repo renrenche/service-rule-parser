@@ -37,12 +37,11 @@ describe('service-rule-parser', function () {
     });
 
     it('should return expected result when zh_CN comma', function () {
-        const result = parser.parse('SET a=b，b="c",c=\'d\' WHERE test>1 and test<2 and test<>2.5');
+        const result = parser.parse('SET a=b，b="c" WHERE test>1 and test<2 and test<>2.5');
         console.log(result);
         expect(result.operation).to.be.a('object');
         expect(result.operation.a).to.equal('b');
         expect(result.operation.b).to.equal('c');
-        expect(result.operation.c).to.equal('d');
         expect(result.condition).to.be.a('object');
         expect(result.condition.test).to.be.a('object');
         expect(result.condition.test.gt).to.equal(1);
@@ -51,12 +50,14 @@ describe('service-rule-parser', function () {
     });
 
     it('should return expected result when valid param', function () {
-        const result = parser.parse('SET minFee =2000, maxFee= 8000,    feeRatio = 0.03 WHERE   carPrice<   10 AND carPrice >5 AND emission <= 4');
+        const result = parser.parse('SET minFee =2000, maxFee= 8000,    feeRatio = 0.03,display=true,nullable=null WHERE   carPrice<   10 AND carPrice >5 AND emission <= 4');
         console.log(result);
         expect(result.operation).to.be.a('object');
         expect(result.operation.minFee).to.equal(2000);
         expect(result.operation.maxFee).to.equal(8000);
         expect(result.operation.feeRatio).to.equal(0.03);
+        expect(result.operation.display).to.equal(true);
+        expect(result.operation.nullable).to.equal(null);
         expect(result.condition).to.be.a('object');
         expect(result.condition.carPrice).to.be.a('object');
         expect(result.condition.carPrice.lt).to.equal(10);
