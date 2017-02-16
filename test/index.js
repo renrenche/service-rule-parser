@@ -89,5 +89,29 @@ describe('service-rule-parser', function () {
         expect(result.condition.carPrice.gt).to.equal(5);
         expect(result.condition.emission.lte).to.equal(4);
     });
+
+    it('should return expected result when operation is statement', function () {
+        const result = parser.parse('SET count= count+ 1, WHERE 1 <= 4');
+        expect(result.operation).to.be.a('object');
+        expect(result.operation.count).to.equal('count+1');
+    });
+
+    it('should return expected result when operation is statement', function () {
+        const result = parser.parse('SET count= count*1, WHERE 1 <= 4');
+        expect(result.operation).to.be.a('object');
+        expect(result.operation.count).to.equal('count*1');
+    });
+
+    it('should return expected result when operation is statement', function () {
+        const result = parser.parse('SET sum= total*price, WHERE 1 <= 4');
+        expect(result.operation).to.be.a('object');
+        expect(result.operation.sum).to.equal('total*price');
+    });
+
+    it('should return expected result when operation is complex statement', function () {
+        const result = parser.parse('SET sum= total*price - price * 2, WHERE 1 <= 4');
+        expect(result.operation).to.be.a('object');
+        expect(result.operation.sum).to.equal('total*price-price*2');
+    });
 });
 
