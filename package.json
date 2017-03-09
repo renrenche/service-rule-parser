@@ -16,6 +16,7 @@
     "parser"
   ],
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "chai": "^3.5.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^9.0.0",
@@ -45,5 +46,10 @@
     "prepublish": "gulp prepublish",
     "test": "gulp"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^2.6.1",
+    "lodash": "^4.17.4",
+    "sqlite-parser": "^1.0.0"
+  }
 }

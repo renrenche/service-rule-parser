@@ -19,7 +19,7 @@ describe('service-rule-parser', function () {
     });
 
     it('should return object when valid param', function () {
-        expect(parser.parse('SET a=b WHERE test=1')).to.be.a('object');
+        expect(parser.parse('SET a=b WHERE test=1 AND test2=2 AND test3=3')).to.be.a('object');
         expect(parser.parse('set a=b where test=1')).to.be.a('object');
         expect(parser.parse('sEt a=b Where test=1')).to.be.a('object');
     });
@@ -53,15 +53,15 @@ describe('service-rule-parser', function () {
         const result = parser.parse('SET minFee =2000, maxFee= 8000,    feeRatio = 0.03,display=true,nullable=null WHERE   carPrice<   10 AND carPrice >5 AND emission <= 4');
         console.log(result);
         expect(result.operation).to.be.a('object');
-        expect(result.operation.minFee).to.equal(2000);
-        expect(result.operation.maxFee).to.equal(8000);
-        expect(result.operation.feeRatio).to.equal(0.03);
+        expect(result.operation.minfee).to.equal(2000);
+        expect(result.operation.maxfee).to.equal(8000);
+        expect(result.operation.feeratio).to.equal(0.03);
         expect(result.operation.display).to.equal(true);
         expect(result.operation.nullable).to.equal(null);
         expect(result.condition).to.be.a('object');
-        expect(result.condition.carPrice).to.be.a('object');
-        expect(result.condition.carPrice.lt).to.equal(10);
-        expect(result.condition.carPrice.gt).to.equal(5);
+        expect(result.condition.carprice).to.be.a('object');
+        expect(result.condition.carprice.lt).to.equal(10);
+        expect(result.condition.carprice.gt).to.equal(5);
         expect(result.condition.emission.lte).to.equal(4);
     });
 
@@ -78,40 +78,40 @@ describe('service-rule-parser', function () {
                 AND emission <= 4`);
         console.log(result);
         expect(result.operation).to.be.a('object');
-        expect(result.operation.minFee).to.equal(2000);
-        expect(result.operation.maxFee).to.equal(8000);
-        expect(result.operation.feeRatio).to.equal(0.03);
+        expect(result.operation.minfee).to.equal(2000);
+        expect(result.operation.maxfee).to.equal(8000);
+        expect(result.operation.feeratio).to.equal(0.03);
         expect(result.operation.display).to.equal(true);
         expect(result.operation.nullable).to.equal(null);
         expect(result.condition).to.be.a('object');
-        expect(result.condition.carPrice).to.be.a('object');
-        expect(result.condition.carPrice.lt).to.equal(10);
-        expect(result.condition.carPrice.gt).to.equal(5);
+        expect(result.condition.carprice).to.be.a('object');
+        expect(result.condition.carprice.lt).to.equal(10);
+        expect(result.condition.carprice.gt).to.equal(5);
         expect(result.condition.emission.lte).to.equal(4);
     });
 
     it('should return expected result when operation is statement', function () {
-        const result = parser.parse('SET count= count+ 1, WHERE 1 <= 4');
+        const result = parser.parse('SET count= count+ 1 WHERE 1 <= 4');
         expect(result.operation).to.be.a('object');
-        expect(result.operation.count).to.equal('count+1');
+        expect(result.operation.count).to.equal('count + 1');
     });
 
     it('should return expected result when operation is statement', function () {
-        const result = parser.parse('SET count= count*1, WHERE 1 <= 4');
+        const result = parser.parse('SET count= count*1 WHERE 1 <= 4');
         expect(result.operation).to.be.a('object');
-        expect(result.operation.count).to.equal('count*1');
+        expect(result.operation.count).to.equal('count * 1');
     });
 
     it('should return expected result when operation is statement', function () {
-        const result = parser.parse('SET sum= total*price, WHERE 1 <= 4');
+        const result = parser.parse('SET sum= total*price WHERE 1 <= 4');
         expect(result.operation).to.be.a('object');
-        expect(result.operation.sum).to.equal('total*price');
+        expect(result.operation.sum).to.equal('total * price');
     });
 
     it('should return expected result when operation is complex statement', function () {
-        const result = parser.parse('SET sum= total*price - price * 2, WHERE 1 <= 4');
+        const result = parser.parse('SET sum= total*price - price * 2 WHERE 1 <= 4');
         expect(result.operation).to.be.a('object');
-        expect(result.operation.sum).to.equal('total*price-price*2');
+        expect(result.operation.sum).to.equal('total * price - price * 2');
     });
 });
 
