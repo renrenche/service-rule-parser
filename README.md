@@ -14,11 +14,21 @@ $ npm install --save service-rule-parser
 
 ```js
 const parser = require('service-rule-parser');
+
+// 1 condition, 1 operation
 const result = parser.parse('SET maxfee=8000 WHERE car_price=10');
 // result: { operation: { maxfee: 8000 }, conditions: { car_price: { eq: 10 } } };
+
+// 2 condition, 1 operation
+const result = parser.parse('SET maxfee=8000 WHERE car_price<10 AND car_pric>5');
+// result: { operation: { maxfee: 8000 }, conditions: { car_price: { lt: 10, gt: 5 } } };
+
+// or condition, 1 operation，注意 condition 变成数组了
+const result = parser.parse('SET maxfee=8000 WHERE car_price<10 OR newcar_price>5');
+// result: { operation: { maxfee: 8000 }, conditions: [{ car_price: { lt: 10 } }, { newcar_price: { gt: 5 } } ] };
 
 ```
 ## License
 
-MIT © [wangshijun]()
+MIT © [wangshijun](wangshijun2010@gmail.com)
 
