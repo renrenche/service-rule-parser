@@ -49,6 +49,22 @@ describe('service-rule-parser', function () {
         expect(result.condition.test.neq).to.equal(2.5);
     });
 
+    it('should return expected result when OR operation', function () {
+        const result = parser.parse('SET a=b，b="c" WHERE test>1 OR test<2 OR test<>2.5');
+        console.log(result);
+        expect(result.operation).to.be.a('object');
+        expect(result.operation.a).to.equal('b');
+        expect(result.operation.b).to.equal('c');
+        expect(result.condition).to.be.a('array');
+        expect(result.condition.length).to.equal(3);
+        expect(result.condition[0].test).to.be.a('object');
+        expect(result.condition[1].test).to.be.a('object');
+        expect(result.condition[2].test).to.be.a('object');
+        expect(result.condition[0].test.gt).to.equal(1);
+        expect(result.condition[1].test.lt).to.equal(2);
+        expect(result.condition[2].test.neq).to.equal(2.5);
+    });
+
     it('should return expected result when valid param', function () {
         const result = parser.parse('SET minFee =2000, maxFee= 8000,    feeRatio = 0.03,display=true,nullable=null WHERE   carPrice<   10 AND carPrice >5 AND emission <= 4');
         console.log(result);
