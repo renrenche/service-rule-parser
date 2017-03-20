@@ -106,6 +106,23 @@ describe('service-rule-parser', function () {
         expect(result.condition.emission.lte).to.equal(4);
     });
 
+    it('should return expected result when valid param: OR + AND', function () {
+        const result = parser.parse(`SET
+                display=true
+            WHERE
+                price>80
+                OR fuel_type='汽油'
+                OR fuel_type='柴油'`);
+        console.log(result);
+        expect(result.operation).to.be.an('object');
+        expect(result.operation.display).to.equal(true);
+        expect(result.condition).to.be.an('array');
+
+        expect(result.condition[0].price.gt).to.equal(80);
+        expect(result.condition[1].fuel_type.eq).to.equal('汽油');
+        expect(result.condition[2].fuel_type.eq).to.equal('柴油');
+    });
+
     it('should return expected result when operation is statement', function () {
         const result = parser.parse('SET count= count+ 1 WHERE 1 <= 4');
         expect(result.operation).to.be.a('object');
